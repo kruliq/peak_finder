@@ -12,11 +12,8 @@ sample_rate, data = wav.read('skrzypce.wav')
 
 fft_data = np.fft.fft(data, 16384)
 freq_bins = np.fft.fftfreq(16384, 1 / 16000)
-
-# Filter out the positive frequencies
 positive_freq_indices = np.where(freq_bins >= 0)
 positive_freq_bins = freq_bins[positive_freq_indices]
-
 positive_fft_data = np.abs(fft_data[positive_freq_indices])
 
 # Apply smoothing 
@@ -37,13 +34,13 @@ for i, peak in enumerate(peaks):
     if properties['peak_heights'][i] - surrounding_noise_floor >= 10:
         prominent_peaks.append(peak)
 
-# Plot the magnitude spectrum for positive frequencies in dBFS
+# Plot
 plt.plot(positive_freq_bins, positive_fft_data_dbfs)
 plt.xlabel('Frequency (Hz)')
 plt.ylabel('Magnitude (dBFS)')
 plt.title('FFT of Resampled Data (Positive Frequencies)')
 
-# Label the maximum peaks above the noise floor
+# Label peaks
 for peak in prominent_peaks:
     plt.annotate(f'{positive_freq_bins[peak]:.1f} Hz', 
                  (positive_freq_bins[peak], positive_fft_data_dbfs[peak]), 
@@ -58,10 +55,9 @@ export_data = {
     'Magnitude (dBFS)': positive_fft_data_dbfs[prominent_peaks]
 }
 
-# Create a DataFrame
+# Export to Excel
 df = pd.DataFrame(export_data)
 
-# Function to get a unique filename
 def get_unique_filename(base_filename, extension):
     counter = 1
     filename = f"{base_filename}.{extension}"
@@ -70,8 +66,6 @@ def get_unique_filename(base_filename, extension):
         counter += 1
     return filename
 
-# Get a unique filename for the Excel file
 unique_filename = get_unique_filename('peaks_data', 'xlsx')
 
-# Export to Excel
 df.to_excel(unique_filename, index=False)
