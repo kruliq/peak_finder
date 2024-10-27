@@ -11,6 +11,7 @@ import librosa
 # sample_rate, data = wav.read('t.wav',)
 data, sample_rate = librosa.load(path='skrzypce.wav', sr=16000)
 
+#fft
 fft_data = np.fft.fft(data, 16384)
 freq_bins = np.fft.fftfreq(16384, 1 / 16000)
 positive_freq_indices = np.where(freq_bins >= 0)
