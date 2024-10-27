@@ -9,7 +9,7 @@ import os
 import librosa
 
 # sample_rate, data = wav.read('t.wav',)
-data, sample_rate = librosa.load(path='t.wav', sr=16000)
+data, sample_rate = librosa.load(path='skrzypce.wav', sr=16000)
 
 fft_data = np.fft.fft(data, 16384)
 freq_bins = np.fft.fftfreq(16384, 1 / 16000)
@@ -39,7 +39,7 @@ for i, peak in enumerate(peaks):
 plt.plot(positive_freq_bins, positive_fft_data_dbfs)
 plt.xlabel('Frequency (Hz)')
 plt.ylabel('Magnitude (dBFS)')
-plt.title('FFT of Resampled Data (Positive Frequencies)')
+plt.title('FFT')
 
 # Label peaks
 for peak in prominent_peaks:
