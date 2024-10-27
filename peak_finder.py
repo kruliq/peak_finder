@@ -6,9 +6,10 @@ import scipy.io.wavfile as wav
 from scipy.ndimage import uniform_filter1d
 import pandas as pd
 import os
+import librosa
 
-sample_rate, data = wav.read('skrzypce.wav')
-
+# sample_rate, data = wav.read('t.wav',)
+data, sample_rate = librosa.load(path='t.wav', sr=16000)
 
 fft_data = np.fft.fft(data, 16384)
 freq_bins = np.fft.fftfreq(16384, 1 / 16000)
